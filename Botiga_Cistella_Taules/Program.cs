@@ -19,14 +19,30 @@
                     AfegirProducte(productesBotiga, preus, ref nElemBotiga);
                     break;
                 case 2:
-                    AfegirProductes(productesBotiga, preus, ref nElemBotiga);
+                    int quantitatAfegir;
+                    Console.Write("Quants productes vols afegir?");
+                    quantitatAfegir = Convert.ToInt32(Console.ReadLine());
+                    AfegirProductes(productesBotiga, preus, ref nElemBotiga, quantitatAfegir);
                     break;
                 case 3:
-                    AmpliarBotiga(ref productesBotiga, ref preus);
+                    int ampliacio;
+                    Console.Write("Quants elements vols ampliar? --> ");
+                    ampliacio = Convert.ToInt32(Console.ReadLine());
+                    AmpliarBotiga(ref productesBotiga, ref preus, ampliacio);
                     break;
                 case 4:
+                    string producteModificar;
+                    Console.Write("A quin producte li vols canviar el preu? --> ");
+                    producteModificar = Console.ReadLine();
+                    ModificarPreu(productesBotiga, preus, producteModificar);
                     break;
                 case 5:
+                    string producteAntic, producteNou;
+                    Console.Write("Quin producte vols modificar?");
+                    producteAntic = Console.ReadLine();
+                    Console.Write("Quin és el nou producte?");
+                    producteNou = Console.ReadLine();
+                    ModificarProducte(productesBotiga, producteAntic, producteNou);
                     break;
                 case 6:
                     break;
@@ -77,13 +93,14 @@
                               "╚═══════════════════════╝\n");
             Console.Write("Tria una opcio: ");
             opcio = Convert.ToInt32(Console.ReadLine());
+            Console.Clear();
             return opcio;
         }
         static void AfegirProducte(string[] productesBotiga, double[] preus, ref int nElemBotiga)
         {
             string producteAfegir;
             double preuAfegir;
-            Console.Clear();
+            
             if (productesBotiga.Length == nElemBotiga)
             {
                 char resposta;
@@ -121,20 +138,23 @@
             nElemBotiga++;
         }
 
-        static void AfegirProductes(string[] productes, double[] preus, ref int nElem)
+        static void AfegirProductes(string[] productes, double[] preus, ref int nElem, int quantitatAfegir)
         {
-            char resposta;
-            Console.WriteLine("Vols afegir un producte?");
-            Console.Write("(S/N) --> ");
-            resposta = Console.ReadKey().KeyChar;
-            resposta = char.ToUpper(resposta);
-            if (resposta == 'S')
+            for (int i = 0; i < quantitatAfegir; i++)
+                AfegirProducte(productes, preus, ref nElem);
+        }
+        static void AmpliarBotiga(ref string[] productesBotiga, ref double[] preus, int ampliacio)
+        {
+            string[] auxProductes = new string[productesBotiga.Length + ampliacio];
+            double[] auxPreus = new double[preus.Length + ampliacio];
+
+            for (int i = 0; i < productesBotiga.Length; i++)
             {
-                while (resposta == 'S')
-                {
-                    AfegirProducte(productes, preus, ref nElem);
-                }
+                auxProductes[i] = productesBotiga[i];
+                auxPreus[i] = preus[i];
             }
+            productesBotiga = auxProductes;
+            preus = auxPreus;
         }
         static void AmpliarBotiga(ref string[] productesBotiga, ref double[] preus)
         {
@@ -151,6 +171,47 @@
             }
             productesBotiga = auxProductes;
             preus = auxPreus;
+        }
+        static void ModificarPreu(string[] productesBotiga, double[] preus, string producteModificar)
+        {
+            int posicio = -1;
+            
+            for (int i = 0; i < productesBotiga.Length; i++)
+            {
+                if (producteModificar == productesBotiga[i])
+                {
+                    posicio = i;
+                }
+            }
+            if (posicio == -1)
+            {
+                Console.WriteLine("Aquest producte no existeix!");
+            }
+            else
+            {
+                Console.Write("Quin és el nou preu d'aquest producte? --> ");
+                preus[posicio] = Convert.ToDouble(Console.ReadLine());
+            }
+        }
+        static void ModificarProducte(string[] productesBotiga, string producteAntic, string producteNou)
+        {
+            int posicio = -1;
+
+            for (int i = 0; i < productesBotiga.Length; i++)
+            {
+                if (producteAntic == productesBotiga[i])
+                {
+                    posicio = i;
+                }
+            }
+            if (posicio == -1)
+            {
+                Console.WriteLine("Aquest producte no existeix!");
+            }
+            else
+            {
+                productesBotiga[posicio] = producteNou;
+            }
         }
     }
 }
