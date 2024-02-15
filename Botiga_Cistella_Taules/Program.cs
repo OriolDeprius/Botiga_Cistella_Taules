@@ -22,7 +22,7 @@
                     AfegirProductes(productesBotiga, preus, ref nElemBotiga);
                     break;
                 case 3:
-                    AmpliarBotiga(productesBotiga, preus, ref nElemBotiga);
+                    AmpliarBotiga(ref productesBotiga, ref preus);
                     break;
                 case 4:
                     break;
@@ -93,7 +93,7 @@
                 resposta = Char.ToUpper(resposta);
                 if (resposta == 'S')
                 {
-                    AmpliarBotiga(productesBotiga, preus, ref nElemBotiga);
+                    AmpliarBotiga(ref productesBotiga, ref preus);
                 }
                 else if (resposta == 'N')
                 {
@@ -136,12 +136,21 @@
                 }
             }
         }
-        static void AmpliarBotiga(string[] productesBotiga, double[] preus, ref int nElemBotiga)
+        static void AmpliarBotiga(ref string[] productesBotiga, ref double[] preus)
         {
             int ampliacio;
             Console.Write("Quants elements vols ampliar? --> ");
             ampliacio = Convert.ToInt32(Console.ReadLine());
+            string[] auxProductes = new string[productesBotiga.Length + ampliacio];
+            double[] auxPreus = new double[preus.Length + ampliacio];
 
+            for (int i = 0; i < productesBotiga.Length; i++)
+            {
+                auxProductes[i] = productesBotiga[i];
+                auxPreus[i] = preus[i];
+            }
+            productesBotiga = auxProductes;
+            preus = auxPreus;
         }
     }
 }
