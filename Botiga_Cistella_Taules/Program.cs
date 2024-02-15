@@ -6,7 +6,7 @@
         {
             string[] productesBotiga = new string[] { "kebab", "cocacola", "pomes", "peres", "llimones", "platans", "arros", "", "", "" };
             double[] preus = new double[] { 3.5, 2, 2, 3, 4, 5, 6, 0, 0, 0 };
-            int nElemBotiga = 10;
+            int nElemBotiga = 7;
 
             string[] productesCistella = new string[10];
             int[] productes = new int[10];
@@ -22,6 +22,7 @@
                     AfegirProductes(productesBotiga, preus, ref nElemBotiga);
                     break;
                 case 3:
+                    AmpliarBotiga(ref productesBotiga, ref preus);
                     break;
                 case 4:
                     break;
@@ -92,7 +93,7 @@
                 resposta = Char.ToUpper(resposta);
                 if (resposta == 'S')
                 {
-                    AmpliarBotiga();
+                    AmpliarBotiga(ref productesBotiga, ref preus);
                 }
                 else if (resposta == 'N')
                 {
@@ -123,7 +124,6 @@
         static void AfegirProductes(string[] productes, double[] preus, ref int nElem)
         {
             char resposta;
-            string producteAfegir;
             Console.WriteLine("Vols afegir un producte?");
             Console.Write("(S/N) --> ");
             resposta = Console.ReadKey().KeyChar;
@@ -132,15 +132,25 @@
             {
                 while (resposta == 'S')
                 {
-                    Console.WriteLine("Quin producte vols afegir?");
-                    producteAfegir= Console.ReadLine();
+                    AfegirProducte(productes, preus, ref nElem);
                 }
-
             }
         }
-        static void AmpliarBotiga()
+        static void AmpliarBotiga(ref string[] productesBotiga, ref double[] preus)
         {
+            int ampliacio;
+            Console.Write("Quants elements vols ampliar? --> ");
+            ampliacio = Convert.ToInt32(Console.ReadLine());
+            string[] auxProductes = new string[productesBotiga.Length + ampliacio];
+            double[] auxPreus = new double[preus.Length + ampliacio];
 
+            for (int i = 0; i < productesBotiga.Length; i++)
+            {
+                auxProductes[i] = productesBotiga[i];
+                auxPreus[i] = preus[i];
+            }
+            productesBotiga = auxProductes;
+            preus = auxPreus;
         }
     }
 }
