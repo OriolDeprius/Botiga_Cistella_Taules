@@ -16,7 +16,7 @@ namespace Botiga_Cistella_Taules
             string[] productesCistella = new string[10];
             int[] quantitat = new int[10];
             int nElemCistella = productesCistella.Length;
-            double diners;
+            //double diners;
 
             switch (Menu())
             {
@@ -41,6 +41,7 @@ namespace Botiga_Cistella_Taules
                 case 9:
                     break;
                 case 10:
+                    Comprar1Producte(productesBotiga, preus, nElemBotiga, productesCistella, quantitat, ref nElemCistella);
                     break;
                 case 11:
                     break;
@@ -138,7 +139,7 @@ namespace Botiga_Cistella_Taules
                 while (resposta == 'S')
                 {
                     Console.WriteLine("Quin producte vols afegir?");
-                    producteAfegir= Console.ReadLine();
+                    producteAfegir = Console.ReadLine();
                 }
 
             }
@@ -149,10 +150,12 @@ namespace Botiga_Cistella_Taules
         }
         //Cistella
 
-        static void Comprar1Producte(string[] productesBotiga, double [] preus, int nElemBotiga, string [] productesCistella, int[] quantitat, ref int nElemCistella, ref double d)
+        static void Comprar1Producte(string[] productesBotiga, double[] preus, int nElemBotiga, string[] productesCistella, int[] quantitat, ref int nElemCistella) //ref double d)
         {
             Console.Write("Quin producte vols afegir a la cistella? ");
-            string producte=Convert.ToString(Console.ReadLine());
+            string producte = Convert.ToString(Console.ReadLine());
+            Console.Clear();
+
             //int index;
             //do
             //{
@@ -168,19 +171,24 @@ namespace Botiga_Cistella_Taules
 
             //string producte = productesBotiga[index];
 
-            //Console.Write("Quantes unitats vols? ");
-            int unitats=Convert.ToInt32(Console.ReadLine());
+            Console.Write("Quantes unitats vols? ");
+            int unitats = Convert.ToInt32(Console.ReadLine());
+            Console.Clear();
+
+            Console.Write("Quin pressupost tens? ");
+            double diners = Convert.ToDouble(Console.ReadLine());
+            Console.Clear();
 
             int posicio = Buscar(productesBotiga, nElemBotiga, producte);
 
-            if (posicio == -1 )
+            if (posicio == -1)
             {
                 Console.WriteLine("No s'ha trobat el producte ");
             }
             else
             {
                 double preuProducte = preus[posicio] * unitats;
-                if (preuProducte <= d)
+                if (preuProducte <= diners)
                 {
                     //comprovar si cistella plena
                     productesCistella[nElemCistella] = producte;
@@ -194,40 +202,50 @@ namespace Botiga_Cistella_Taules
             }
         }
 
-        static int Buscar (string[] productesCistella, int nElemCistella, string nom) 
+        static int Buscar(string[] productesCistella, int nElemCistella, string nom)
         {
             int index = -1;
-            for(int i = 0;i<nElemCistella;i++)
+            for (int i = 0; i < nElemCistella; i++)
             {
                 if (productesCistella[i] == nom)
-                    index = i
+                    index = i;
             }
             return index;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        static void ComprarProductes (int[] productesBotiga, string[] quantitat)
+        static void ComprarProductes()
         {
-            int[] aux = new int[productesBotiga.Length + ];
-            for (int i= 0; i < productesBotiga.Length; i++) 
-                aux[i] = productesBotiga[i];
-            productesBotiga= aux;
+
+            Console.Write("Quina quantitat de productes vols comprar? ");
+            int quant = Convert.ToInt32(Console.ReadLine());
+
+            for (int i = 0; i < quant; i++)
+            {
+                Comprar1Producte();
+
+            }
+        }
+        static void OrdenarCistella(string[] productesCistella, int nElemCistella)
+        {
+            //for (int i =0; i < nElemCistella-1; i++)
+            //{
+            //    for (int j=0; j<nElemCistella -1; j++)
+            //        if (productesCistella[j] > productesCistella[j+ 1])
+            //        {
+            //            int aux = productesCistella [j];
+            //            productesCistella[j] = productesCistella[j + 1];
+            //            productesCistella[j + 1] = aux;
+            //        }
+            //}
+        }
+        static void MostrarCistella () 
+        { 
 
         }
-        
-    }
+        static void CistellaToString()
+        {
+
+        }
+
+    } 
 }
