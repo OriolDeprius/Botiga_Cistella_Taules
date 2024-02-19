@@ -265,6 +265,8 @@
                     j--;
                 }
             } while (i <= j);
+            if (j > li) OrdenarProducte(producteBotiga, preus, li, j);
+            if (i < ls) OrdenarProducte(producteBotiga, preus, i, ls);
         }
     }
 }
