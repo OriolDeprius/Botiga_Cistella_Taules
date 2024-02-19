@@ -68,7 +68,7 @@ namespace Botiga_Cistella_Taules
                 case 9:
                     break;
                 case 10:
-                    Comprar1Producte(productesBotiga, preus, nElemBotiga, productesCistella, quantitat, ref nElemCistella);
+                    Comprar1Producte(productesBotiga, preus, ref nElemBotiga, productesCistella, quantitat, ref nElemCistella);
                     break;
                 case 11:
                     break;
@@ -275,7 +275,7 @@ namespace Botiga_Cistella_Taules
 
         //Cistella
 
-        static void Comprar1Producte(string[] productesBotiga, double[] preus, int nElemBotiga, string[] productesCistella, int[] quantitat, ref int nElemCistella) //ref double d)
+        static void Comprar1Producte(string[] productesBotiga, double[] preus, ref int nElemBotiga, string[] productesCistella, int[] quantitat, ref int nElemCistella) //ref double d)
         {
             Console.Write("Quin producte vols afegir a la cistella? ");
             string producte = Convert.ToString(Console.ReadLine());
@@ -338,7 +338,7 @@ namespace Botiga_Cistella_Taules
             return index;
         }
 
-        static void ComprarProductes()
+        static void ComprarProductes(string[] productesBotiga, double[] preus, ref int nElemBotiga, string[] productesCistella, int[] quantitat, ref int nElemCistella)
         {
 
             Console.Write("Quina quantitat de productes vols comprar? ");
@@ -346,24 +346,28 @@ namespace Botiga_Cistella_Taules
 
             for (int i = 0; i < quant; i++)
             {
-                Comprar1Producte();
+                Comprar1Producte(productesBotiga, preus, ref nElemBotiga, productesCistella, quantitat, ref nElemCistella);
 
             }
         }
-        static void OrdenarCistella(string[] productesCistella, int nElemCistella)
+        static void OrdenarCistella(int[] productesCistella, int nElemCistella, int quantiat)
         {
-            //for (int i =0; i < nElemCistella-1; i++)
-            //{
-            //    for (int j=0; j<nElemCistella -1; j++)
-            //        if (productesCistella[j] > productesCistella[j+ 1])
-            //        {
-            //            int aux = productesCistella [j];
-            //            productesCistella[j] = productesCistella[j + 1];
-            //            productesCistella[j + 1] = aux;
-            //        }
-            //}
+            for (int numVolta = 0; numVolta < nElemCistella - 1; numVolta++)
+            {
+                for (int i = 0; i < nElemCistella; i++)
+                {
+                    if (productesCistella[i].CompareTo(productesCistella[i + 1]) > 0)
+                    {
+                        Permutar(ref productesCistella[i], ref productesCistella[i + 1]);
+                    }
+                }
+            }
         }
-        static void MostrarCistella () 
+        static void Permutar(ref int a, ref int b)
+        {
+            (a, b) = (b, a);
+        }
+            static void MostrarCistella () 
         { 
 
         }
